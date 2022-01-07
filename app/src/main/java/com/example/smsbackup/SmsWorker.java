@@ -29,6 +29,7 @@ public class SmsWorker {
     }
 
     public void saveSms() {
+        allSmsList.clear();
         saveInbox();
         saveSent();
     }
