@@ -34,6 +34,10 @@ public class SmsWorker {
         saveSent();
     }
 
+    public List<Map<String, String>> getAllSmsList() {
+        return allSmsList;
+    }
+
     private void saveInbox() {
         saveSmsList(Telephony.Sms.CONTENT_URI);
     }
