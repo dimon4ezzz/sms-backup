@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Бэкапер СМС</string>
+    <string name="backup_sms_btn_text">Сохранить все СМС</string>
+</resources>
