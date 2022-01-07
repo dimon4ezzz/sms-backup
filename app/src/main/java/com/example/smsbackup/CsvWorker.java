@@ -14,11 +14,17 @@ public class CsvWorker {
     private static final String FILENAME = "sms_list.csv";
 
     private final File externalFilesDir;
-    private final Consumer<String> statusListener;
+    private final Consumer<String> successfulStatusListener;
+    private final Consumer<String> unsuccessfulStatusListener;
 
-    public CsvWorker(File externalFilesDir, Consumer<String> statusListener) {
+    public CsvWorker(
+            File externalFilesDir,
+            Consumer<String> successfulStatusListener,
+            Consumer<String> unsuccessfulStatusListener
+    ) {
         this.externalFilesDir = externalFilesDir;
-        this.statusListener = statusListener;
+        this.successfulStatusListener = successfulStatusListener;
+        this.unsuccessfulStatusListener = unsuccessfulStatusListener;
     }
 
     public void saveIntoFile(List<Map<String, String>> smsList) {
@@ -28,9 +34,9 @@ public class CsvWorker {
                     .map(getMapToStringMapper())
                     .collect(Collectors.joining("\n"));
             stream.write(text.getBytes(StandardCharsets.UTF_8));
-            statusListener.accept("placed in: " + path.getAbsolutePath());
+            successfulStatusListener.accept(path.getAbsolutePath());
         } catch (IOException e) {
-            statusListener.accept("cannot save CSV file in: " + path.getAbsolutePath());
+            unsuccessfulStatusListener.accept(path.getAbsolutePath());
         }
     }
 

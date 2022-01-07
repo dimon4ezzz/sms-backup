@@ -52,13 +52,23 @@ public class MainActivity extends AppCompatActivity {
         }
         smsWorker.saveSms();
         if (csvWorker == null) {
-            csvWorker = new CsvWorker(getExternalFilesDir(null), getStatusListener());
+            csvWorker = new CsvWorker(getExternalFilesDir(null), getSuccessfulStatusListener(), getUnsuccessfulStatusListener());
         }
         csvWorker.saveIntoFile(smsWorker.getAllSmsList());
     }
 
-    private Consumer<String> getStatusListener() {
-        return str -> Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    private Consumer<String> getSuccessfulStatusListener() {
+        return str -> {
+            String text = getResources().getString(R.string.backup_successful, str);
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        };
+    }
+
+    private Consumer<String> getUnsuccessfulStatusListener() {
+        return str -> {
+            String text = getResources().getString(R.string.backup_unsuccessful, str);
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        };
     }
 
 }

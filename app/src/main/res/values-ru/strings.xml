@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Бэкапер СМС</string>
     <string name="backup_sms_btn_text">Сохранить все СМС</string>
+    <string name="backup_successful">сохранено в %1$s</string>
+    <string name="backup_unsuccessful">не получилось сохранить %1$s</string>
 </resources>
