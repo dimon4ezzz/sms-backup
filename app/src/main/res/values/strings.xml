@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SMS Backup</string>
+    <string name="backup_sms_btn_text">Backup SMS</string>
 </resources>
