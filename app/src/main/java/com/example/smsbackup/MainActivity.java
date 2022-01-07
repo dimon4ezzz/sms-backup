@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_READ_SMS = 1;
 
+    private SmsWorker smsWorker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +32,21 @@ public class MainActivity extends AppCompatActivity {
         boolean ok = checkSmsPermission();
         if (!ok) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, REQUEST_CODE_READ_SMS);
+        } else {
+            saveSms();
         }
     }
 
     private boolean checkSmsPermission() {
         int status = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
         return status == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void saveSms() {
+        if (smsWorker == null) {
+            smsWorker = new SmsWorker(getContentResolver());
+        }
+        smsWorker.saveSms();
     }
 
 }
