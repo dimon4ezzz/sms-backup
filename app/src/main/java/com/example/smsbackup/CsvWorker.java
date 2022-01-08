@@ -1,5 +1,7 @@
 package com.example.smsbackup;
 
+import com.example.smsbackup.model.SmsData;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +29,7 @@ public class CsvWorker {
         this.unsuccessfulStatusListener = unsuccessfulStatusListener;
     }
 
-    public void saveIntoFile(List<Map<String, String>> smsList) {
+    public void saveIntoFile(List<SmsData> smsList) {
         File path = new File(externalFilesDir, FILENAME);
         try (FileOutputStream stream = new FileOutputStream(path)) {
             String text = smsList.stream()
@@ -40,8 +42,12 @@ public class CsvWorker {
         }
     }
 
-    private Function<Map<String, String>, String> getMapToStringMapper() {
-        return map -> String.join(",", map.values());
+    private Function<SmsData, String> getMapToStringMapper() {
+        return smsData -> smsData.address + "," +
+                smsData.body + "," +
+                smsData.date + "," +
+                smsData.sentDate + "," +
+                smsData.serviceCenter;
     }
 
 }

@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
 
+import com.example.smsbackup.model.SmsData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +16,7 @@ public class SmsWorker {
     private final ContentResolver contentResolver;
 
     private final String[] smsProjection;
-    private final List<Map<String, String>> allSmsList;
+    private final List<SmsData> allSmsList;
 
     public SmsWorker(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;
@@ -34,7 +36,7 @@ public class SmsWorker {
         saveSent();
     }
 
-    public List<Map<String, String>> getAllSmsList() {
+    public List<SmsData> getAllSmsList() {
         return allSmsList;
     }
 
@@ -50,11 +52,18 @@ public class SmsWorker {
         Cursor cursor = contentResolver.query(contentUri, smsProjection, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                Map<String, String> msgData = new HashMap<>();
-                for (int i = 0; i < cursor.getColumnCount(); i++) {
-                    msgData.put(cursor.getColumnName(i), cursor.getString(i));
-                }
-                allSmsList.add(msgData);
+                SmsData smsData = new SmsData();
+                int idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.ADDRESS);
+                smsData.address = cursor.getString(idx);
+                idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.BODY);
+                smsData.body = cursor.getString(idx);
+                idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.DATE);
+                smsData.date = cursor.getLong(idx);
+                idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.DATE_SENT);
+                smsData.sentDate = cursor.getLong(idx);
+                idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.SERVICE_CENTER);
+                smsData.serviceCenter = cursor.getString(idx);
+                allSmsList.add(smsData);
             } while (cursor.moveToNext());
             cursor.close();
         }
