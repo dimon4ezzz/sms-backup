@@ -32,7 +32,8 @@ public class CsvWorker {
     public void saveIntoFile(List<SmsData> smsList) {
         File path = new File(externalFilesDir, FILENAME);
         try (FileOutputStream stream = new FileOutputStream(path)) {
-            String text = smsList.stream()
+            String text = "address,body,date,sent date,service center\n";
+            text += smsList.stream()
                     .map(getMapToStringMapper())
                     .collect(Collectors.joining("\n"));
             stream.write(text.getBytes(StandardCharsets.UTF_8));
