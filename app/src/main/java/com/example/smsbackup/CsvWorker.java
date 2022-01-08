@@ -44,7 +44,7 @@ public class CsvWorker {
 
     private Function<SmsData, String> getMapToStringMapper() {
         return smsData -> smsData.address + "," +
-                smsData.body + "," +
+                "\"" + smsData.body + "\"," +
                 smsData.date + "," +
                 smsData.sentDate + "," +
                 smsData.serviceCenter;
