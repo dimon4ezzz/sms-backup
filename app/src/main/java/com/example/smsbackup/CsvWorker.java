@@ -32,7 +32,7 @@ public class CsvWorker {
     public void saveIntoFile(List<SmsData> smsList) {
         File path = new File(externalFilesDir, FILENAME);
         try (FileOutputStream stream = new FileOutputStream(path)) {
-            String text = "address,body,date,sent date,service center\n";
+            String text = "address,body,date,sent date,service center,type\n";
             text += smsList.stream()
                     .map(getMapToStringMapper())
                     .collect(Collectors.joining("\n"));
@@ -48,7 +48,8 @@ public class CsvWorker {
                 "\"" + smsData.body + "\"," +
                 smsData.date + "," +
                 smsData.sentDate + "," +
-                smsData.serviceCenter;
+                smsData.serviceCenter + "," +
+                smsData.type;
     }
 
 }

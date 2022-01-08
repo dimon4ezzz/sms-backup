@@ -25,7 +25,8 @@ public class SmsWorker {
                 Telephony.TextBasedSmsColumns.BODY,
                 Telephony.TextBasedSmsColumns.DATE,
                 Telephony.TextBasedSmsColumns.DATE_SENT,
-                Telephony.TextBasedSmsColumns.SERVICE_CENTER
+                Telephony.TextBasedSmsColumns.SERVICE_CENTER,
+                Telephony.TextBasedSmsColumns.TYPE
         };
         this.allSmsList = new ArrayList<>();
     }
@@ -63,6 +64,8 @@ public class SmsWorker {
                 smsData.sentDate = cursor.getLong(idx);
                 idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.SERVICE_CENTER);
                 smsData.serviceCenter = cursor.getString(idx);
+                idx = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.TYPE);
+                smsData.type = cursor.getInt(idx);
                 allSmsList.add(smsData);
             } while (cursor.moveToNext());
             cursor.close();

@@ -6,4 +6,5 @@ public class SmsData {
     public Long date;
     public Long sentDate;
     public String serviceCenter;
+    public Integer type;
 }
