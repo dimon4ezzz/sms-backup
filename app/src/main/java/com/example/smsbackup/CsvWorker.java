@@ -1,5 +1,7 @@
 package com.example.smsbackup;
 
+import android.provider.Telephony;
+
 import com.example.smsbackup.model.SmsData;
 
 import java.io.File;
@@ -49,7 +51,7 @@ public class CsvWorker {
                 smsData.date + "," +
                 smsData.sentDate + "," +
                 smsData.serviceCenter + "," +
-                smsData.type;
+                smsData.getStringType();
     }
 
 }
